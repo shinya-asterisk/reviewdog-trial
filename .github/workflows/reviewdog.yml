@@ -1,0 +1,22 @@
+name: "RuboCop"
+
+on: pull_request
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1.2
+    - name: Run RuboCop
+      uses: reviewdog/action-rubocop@v2
+      with:
+        rubocop_version: gemfile
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        reporter: github-pr-review
